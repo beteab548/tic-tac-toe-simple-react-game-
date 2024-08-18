@@ -1,37 +1,18 @@
 import { useState } from "react";
-export default function Player({ name, symbol }) {
+export default function Player({ initialName, symbol }) {
   const [isEditing, setEditingMode] = useState(false);
-  const [playerName, setPlayerName] = useState({
-    playerName1: "player-1",
-    playerName2: "player-2",
-  });
+  const [playerName, setPlayerName] = useState(initialName);
   function playerEditing(value) {
     setEditingMode(value);
   }
-  function setPlayerNames(valueNames) {
-    console.log(playerName);
-    if (name === "player1") {
-      setPlayerName((previouseNames) => {
-        return { ...previouseNames, playerName1: valueNames };
-      });
-    } else if (name === "player2")
-      setPlayerName((previouseNames) => {
-        return { ...previouseNames, playerName2: valueNames };
-      });
+  function setPlayerNames(event) {
+    setPlayerName(event.target.value);
   }
   let playerView;
   let buttonView;
   if (isEditing) {
     playerView = (
-      <input
-        type="text"
-        value={
-          name === "player1" ? playerName.playerName1 : playerName.playerName2
-        }
-        onChange={(e) => {
-          setPlayerNames(e.target.value);
-        }}
-      />
+      <input type="text" value={playerName} onChange={setPlayerNames} />
     );
     buttonView = (
       <button
@@ -43,11 +24,7 @@ export default function Player({ name, symbol }) {
       </button>
     );
   } else {
-    playerView = (
-      <span className="player-name">
-        {name === "player1" ? playerName.playerName1 : playerName.playerName2}
-      </span>
-    );
+    playerView = <span className="player-name">{playerName}</span>;
     buttonView = (
       <button
         onClick={() => {
