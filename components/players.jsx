@@ -39,7 +39,7 @@ export default function Player({ name, symbol }) {
           playerEditing(false);
         }}
       >
-        done
+        save
       </button>
     );
   } else {
