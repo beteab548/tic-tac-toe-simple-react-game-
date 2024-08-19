@@ -4,9 +4,21 @@ import Player from "../components/players";
 
 function App() {
   const [currentPlayer, setCurrentPlayer] = useState("x");
-  function toogleCurrentPlayer() {
+  const [gameBoard, setGameBoard] = useState([]);
+  function updateGameBoard(rowIndex, colIndex) {
     setCurrentPlayer((currentPlayerSymbols) => {
       return currentPlayerSymbols === "x" ? "o" : "x";
+    });
+    let presentPlayer = "x";
+    if (gameBoard.length > 0 && gameBoard[0].player === "x") {
+      presentPlayer = "o";
+    }
+    setGameBoard((prevValue) => {
+      const updatedBoard = [
+        { square: { rows: rowIndex, cols: colIndex }, player: presentPlayer },
+        ...prevValue,
+      ];
+      return updatedBoard;
     });
   }
   return (
@@ -24,10 +36,7 @@ function App() {
             isActive={currentPlayer === "o"}
           />
         </ol>
-        <GameBoard
-          currentPlayerSymbol={currentPlayer}
-          toogleCurrentPlayer={toogleCurrentPlayer}
-        />
+        <GameBoard updateGameBoard={updateGameBoard} board={gameBoard} />
       </div>
     </main>
   );

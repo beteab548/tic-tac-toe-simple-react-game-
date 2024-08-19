@@ -1,23 +1,16 @@
-import { useState } from "react";
-
 const initialGameBoard = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
 ];
-export default function GameBoard({
-  currentPlayerSymbol,
-  toogleCurrentPlayer,
-}) {
-  const [gameBoard, setGameBoard] = useState(initialGameBoard);
-  function updateGameBoardUI(rowIndex, colIndex) {
-    setGameBoard((prevValue) => {
-      const updatedBoard = [...prevValue.map((innerArray) => [...innerArray])];
-      updatedBoard[rowIndex][colIndex] = currentPlayerSymbol;
-      return updatedBoard;
-    });
-    toogleCurrentPlayer();
-  }
+export default function GameBoard({ updateGameBoard, board }) {
+  console.log(board);
+  let gameBoard = initialGameBoard;
+  board.forEach((boards) => {
+    const { square, player } = boards;
+    const { rows, cols } = square;
+    gameBoard[rows][cols] = player;
+  });
   return (
     <ol id="game-board">
       {gameBoard.map((row, rowIndex) => {
@@ -29,7 +22,7 @@ export default function GameBoard({
                   <li key={colIndex}>
                     <button
                       onClick={() => {
-                        updateGameBoardUI(rowIndex, colIndex);
+                        updateGameBoard(rowIndex, colIndex);
                       }}
                     >
                       {playerSymbol}
