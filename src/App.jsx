@@ -1,21 +1,22 @@
 import { useState } from "react";
 import GameBoard from "../components/gameBoard";
 import Player from "../components/players";
-
+import Log from "../components/log";
+function drivedCurrentPlayer(gameBoard) {
+  let currentPlayer = "x";
+  if (gameBoard.length > 0 && gameBoard[0].player === "x") {
+    currentPlayer = "o";
+  }
+  return currentPlayer;
+}
 function App() {
-  const [currentPlayer, setCurrentPlayer] = useState("x");
   const [gameBoard, setGameBoard] = useState([]);
+  let activePlayer = drivedCurrentPlayer(gameBoard);
   function updateGameBoard(rowIndex, colIndex) {
-    setCurrentPlayer((currentPlayerSymbols) => {
-      return currentPlayerSymbols === "x" ? "o" : "x";
-    });
-    let presentPlayer = "x";
-    if (gameBoard.length > 0 && gameBoard[0].player === "x") {
-      presentPlayer = "o";
-    }
     setGameBoard((prevValue) => {
+      activePlayer = drivedCurrentPlayer(prevValue);
       const updatedBoard = [
-        { square: { rows: rowIndex, cols: colIndex }, player: presentPlayer },
+        { square: { rows: rowIndex, cols: colIndex }, player: activePlayer },
         ...prevValue,
       ];
       return updatedBoard;
@@ -28,16 +29,17 @@ function App() {
           <Player
             initialName="player1"
             symbol="x"
-            isActive={currentPlayer === "x"}
+            isActive={activePlayer === "x"}
           />
           <Player
             initialName="player2"
             symbol="o"
-            isActive={currentPlayer === "o"}
+            isActive={activePlayer === "o"}
           />
         </ol>
         <GameBoard updateGameBoard={updateGameBoard} board={gameBoard} />
       </div>
+      <Log board={gameBoard} />
     </main>
   );
 }

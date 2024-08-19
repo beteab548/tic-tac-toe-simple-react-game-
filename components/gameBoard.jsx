@@ -3,8 +3,8 @@ const initialGameBoard = [
   [null, null, null],
   [null, null, null],
 ];
+
 export default function GameBoard({ updateGameBoard, board }) {
-  console.log(board);
   let gameBoard = initialGameBoard;
   board.forEach((boards) => {
     const { square, player } = boards;
