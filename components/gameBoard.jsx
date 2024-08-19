@@ -12,7 +12,7 @@ export default function GameBoard({ updateGameBoard, board }) {
     gameBoard[rows][cols] = player;
   });
   return (
-    <ol>
+    <ol id="game-board">
       {gameBoard.map((row, rowIndex) => {
         return (
           <li key={rowIndex}>
