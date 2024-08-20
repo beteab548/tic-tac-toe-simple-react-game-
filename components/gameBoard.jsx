@@ -1,19 +1,7 @@
-const initialGameBoard = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
-
 export default function GameBoard({ updateGameBoard, board }) {
-  let gameBoard = initialGameBoard;
-  board.forEach((boards) => {
-    const { square, player } = boards;
-    const { rows, cols } = square;
-    gameBoard[rows][cols] = player;
-  });
   return (
     <ol id="game-board">
-      {gameBoard.map((row, rowIndex) => {
+      {board.map((row, rowIndex) => {
         return (
           <li key={rowIndex}>
             <ol>
@@ -24,6 +12,7 @@ export default function GameBoard({ updateGameBoard, board }) {
                       onClick={() => {
                         updateGameBoard(rowIndex, colIndex);
                       }}
+                      disabled={playerSymbol !== null}
                     >
                       {playerSymbol}
                     </button>

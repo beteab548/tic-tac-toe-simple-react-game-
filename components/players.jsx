@@ -40,8 +40,8 @@ export default function Player({ initialName, symbol, isActive }) {
       <li className={isActive ? "active" : undefined}>
         {playerView}
         <span className="player-symbol">{symbol}</span>
+        {buttonView}
       </li>
-      {buttonView}
     </span>
   );
 }
