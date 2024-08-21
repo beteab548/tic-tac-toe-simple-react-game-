@@ -19,7 +19,13 @@ const initialGameBoard = [
 let winner;
 let hasDraw;
 function App() {
+  const [player, setPlayer] = useState({ x: "player-1", o: "player-2" });
   const [gameBoard, setGameBoard] = useState([]);
+  function handelPlayerName(symbol, playerName) {
+    setPlayer((prevValue) => {
+      return { ...prevValue, [symbol]: playerName };
+    });
+  }
   let activePlayer = drivedCurrentPlayer(gameBoard);
   let gameTurns = [
     ...initialGameBoard.map((innerArray) => {
@@ -40,7 +46,7 @@ function App() {
       firstSquare == secondSquare &&
       firstSquare == thirdSquare
     ) {
-      winner = firstSquare;
+      winner = player[firstSquare];
     }
   });
   hasDraw = gameBoard.length == 9 && !winner;
@@ -69,11 +75,13 @@ function App() {
             initialName="player1"
             symbol="x"
             isActive={activePlayer === "x"}
+            handelPlayerName={handelPlayerName}
           />
           <Player
             initialName="player2"
             symbol="o"
             isActive={activePlayer === "o"}
+            handelPlayerName={handelPlayerName}
           />
         </ol>
         <GameBoard updateGameBoard={updateGameBoard} board={gameTurns} />

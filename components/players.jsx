@@ -1,9 +1,15 @@
 import { useState } from "react";
-export default function Player({ initialName, symbol, isActive }) {
+export default function Player({
+  initialName,
+  symbol,
+  isActive,
+  handelPlayerName,
+}) {
   const [isEditing, setEditingMode] = useState(false);
   const [playerName, setPlayerName] = useState(initialName);
   function playerEditing(value) {
     setEditingMode(value);
+    handelPlayerName(symbol, playerName);
   }
   function setPlayerNames(event) {
     setPlayerName(event.target.value);
